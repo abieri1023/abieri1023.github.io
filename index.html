@@ -1,5 +1,58 @@
 <!DOCTYPE html>
 <html>
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    input[type="date"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 50px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 60px;
+      font-weight: bold;
+    }
+
+    /* 媒体查询：调整样式以适应小屏幕 */
+    @media screen and (max-width: 480px) {
+      input[type="date"] {
+        font-size: 14px;
+      }
+      
+      button {
+        font-size: 14px;
+      }
+      
+      #result {
+        font-size: 16px;
+      }
+    }
+  </style>
 <head>
   <title>Date Difference Calculator</title>
 </head>
