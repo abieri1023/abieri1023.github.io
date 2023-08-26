@@ -178,7 +178,16 @@
     // 设置结束日期的默认值为当前日期
     var currentDate = new Date();
     var endDateInput = document.getElementById("endDate");
-    endDateInput.value = currentDate.toISOString().slice(0, 10);
+    endDateInput.value = getCurrentTime().slice(0, 10);
+    // 获取当前时间ISO格式字符串
+    function getCurrentTime() {
+        let datetime = new Date();
+        let timezoneOffset = datetime.getTimezoneOffset() * 60000; // 获取当前时区与UTC的时间差（以毫秒为单位）
+        let localDatetime = new Date(datetime - timezoneOffset); // 调整时间，得到当前时区时间
+        let isoString = localDatetime.toISOString();
+        return isoString;
+    }
+
 </script>
 <script>
 </script>
