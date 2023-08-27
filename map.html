@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>去过地方</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
+    <style>
+        @media (min-width: 0px) and (max-width:350px) {
+            .div1 {
+                width: 350px;
+                height: 85px;
+                border-radius: 8px;
+                background-color: #cfe6f7;
+            }
+        }
+
+        @media (min-width: 350px) and (max-width:500px) {
+            .div1 {
+                width: auto;
+                height: 85px;
+                border-radius: 8px;
+                background-color: #cfe6f7;
+            }
+        }
+
+        @media (min-width: 500px) {
+            .div1 {
+                width: 350px;
+                height: 85px;
+                border-radius: 8px;
+                background-color: #cfe6f7;
+            }
+        }
+    </style>
+    <style type="text/css">
+        html {
+            height: 100%
+        }
+
+        body {
+            height: 100%;
+        }
+
+        #container {
+            height: 100%
+        }
+    </style>
+    <script type="text/javascript"
+        src="https://api.map.baidu.com/api?v=1.0&type=webgl&ak=dLD5FRYzGyuGmfSZU1LhBcQRvGu5wAla"></script>
+</head>
+
+<body>
+    <div class="div1">
+        <div style="width: auto;border: 1px solid green;text-align:center;border-radius: 10px;">
+            <div style="height: 60px;display: flex;align-items: center;
+        justify-content: center;font-size: 30px;">
+                <font style="color: #095eb3; background-color: #b3d2ee;
+                border-radius: 8px;padding-left: 30px;padding-right: 30px;">去过地方</font>
+            </div>
+            <button onclick="javascript:history.back()" style="font-size: 20px;">◀ 返回主页</button>
+            <div>
+                <button onclick="javascript:makeJYAddress();">江油</button>
+                <button onclick="javascript:makeMYAddress();">绵阳</button>
+                <button onclick="javascript:makeCDAddress();">成都</button>
+                <button onclick="javascript:makeZGAddress();">自贡</button>
+                <button onclick="javascript:makeYBAddress();">宜宾</button>
+                <button onclick="javascript:makeLSAddress();">乐山</button>
+                <button onclick="javascript:makeKMAddress();">昆明</button>
+            </div>
+            <div style="background-color:#a8cdf8;position: absolute;
+            z-index: 1;left: 30%;border-radius: 5px;">地点可选择 地图可缩放</div>
+            <div>
+                <div id="container" style="height: 500px;"></div>
+            </div>
+            <div style="margin-top: 10px;"></div>
+        </div>
+    </div>
+</body>
+<style>
+    button {
+        background-color: #6ab0f6;
+        color: white;
+        height: 40px;
+        border: 0;
+        font-size: 16px;
+        box-sizing: content-box;
+        border-radius: 8px;
+        margin-bottom: 5px;
+    }
+
+    button:hover {
+        background-color: #5ba9f7
+    }
+</style>
+<script>
+    // 创建地图实例
+    var map = new BMapGL.Map("container", {
+        enableRotate: false,
+        enableTilt: false
+    });
+    var point = new BMapGL.Point(104.749537, 31.781919); //默认江油
+    initMap(point);
+    function makeJYAddress() {
+        point = new BMapGL.Point(104.749537, 31.781919);  // 江油
+        initMap(point);
+    }
+    function makeMYAddress() {
+        point = new BMapGL.Point(104.75455, 31.467996);  // 绵阳
+        initMap(point);
+    }
+    function makeCDAddress() {
+        point = new BMapGL.Point(104.07246,30.663638);  // 成都
+        initMap(point);
+    }
+    function makeZGAddress() {
+        point = new BMapGL.Point(104.785227,29.345113);  // 自贡
+        initMap(point);
+    }
+    function makeYBAddress() {
+        point = new BMapGL.Point(104.652686,28.770612);  // 宜宾
+        initMap(point);
+    }
+    function makeLSAddress() {
+        point = new BMapGL.Point(103.766216,29.559197);  // 乐山
+        initMap(point);
+    }
+    function makeKMAddress() {
+        point = new BMapGL.Point(102.726013,25.044498);  // 昆明
+        initMap(point);
+    }
+
+    function initMap(point){
+        map.centerAndZoom(point, 13);                 // 初始化地图，设置中心点坐标和地图级别
+        map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+        var cityCtrl = new BMapGL.CityListControl();  // 添加城市列表控件
+        map.addControl(cityCtrl);
+        var markerArr = [
+            //江油
+            { title: "九岭", point: "104.679074,31.641349" },
+            { title: "北二区", point: "104.767773,31.777737" },
+            { title: "明月岛公园", point: "104.739225,31.761604" },
+            { title: "李白纪念馆", point: "104.745621,31.785303" },
+            { title: "西山公园", point: "104.722049,31.790521" },
+            { title: "太白广场", point: "104.74095,31.778059" },
+            { title: "江油中学", point: "104.759634,31.766332" },
+            { title: "田家寺", point: "104.747696,31.806552" },
+            { title: "矿机驾校", point: "104.762446,31.788537" },
+            { title: "金轮广场", point: "104.758601,31.781217" },
+            { title: "爱情谷", point: "104.730466,31.851206" },
+            { title: "武都", point: "104.789225,31.884807" },
+            { title: "厚坝", point: "105.07508,31.972416" },
+
+            //绵阳
+            { title: "绵阳站", point: "104.72407,31.464785" },
+            { title: "富乐山", point: "104.782245,31.476858" },
+            { title: "人民公园", point: "104.754074,31.467095" },
+            { title: "铁牛广场", point: "104.758943,31.470791" },
+            { title: "文化创意园", point: "104.76374,31.44567" },
+            { title: "马家巷", point: "104.760934,31.461345" },
+
+            //广元
+            { title: "剑门关", point: "105.578386,32.230275" },
+
+            //遂宁
+            { title: "遂宁", point: "105.596549,30.533125" },
+
+            //成都
+            { title: "成都东站", point: "104.146956,30.635008" },
+            { title: "IFS中心", point: "104.088035,30.660714" },
+            { title: "太古里", point: "104.09012,30.658842" },
+            { title: "宽窄巷子", point: "104.060251,30.669916" },
+            { title: "春熙路", point: "104.084168,30.661784" },
+            { title: "人民公园", point: "104.063884,30.663974" },
+
+            //自贡
+            { title: "四川轻化工大学", point: "104.772184,29.339792" },
+            { title: "彩灯公园", point: "104.775508,29.358973" },
+            { title: "南湖公园", point: "104.784194,29.325631" },
+
+            //宜宾
+            { title: "四川轻化工大学", point: "104.676905,28.812682" },
+            { title: "临港新天地", point: "104.69152,28.798819" },
+            { title: "龙头山", point: "104.695338,28.805672" },
+            { title: "宜宾学院", point: "104.619449,28.799958" },
+            { title: "催科山", point: "104.633786,28.786331" },
+            { title: "城市公园", point: "104.665469,28.759439" },
+            { title: "冠英古街合江门", point: "104.637981,28.773244" },
+            { title: "五粮液酒厂", point: "104.595703,28.805879" },
+            { title: "翠屏山", point: "104.615071,28.773242" },
+            { title: "莱茵春天", point: "104.655135,28.761432" },
+            { title: "东方时代广场", point: "104.636563,28.753116" },
+            { title: "宜宾西站", point: "104.612317,28.72898" },
+            { title: "李庄古镇", point: "104.806138,28.809376" },
+            { title: "流杯池公园", point: "104.625039,28.787915" },
+            { title: "宜宾汽车站", point: "104.605286,28.75479" },
+            { title: "邦泰国际", point: "104.677554,28.799398" },
+
+            //乐山
+            { title: "乐山大佛", point: "103.783315,29.547965" },
+            { title: "乐山站", point: "103.719012,29.608312" },
+            { title: "绿心公园", point: "103.737194,29.582842" },
+            { title: "万达广场", point: "103.744279,29.625563" },
+            { title: "苏稽古镇", point: "103.67461,29.593475" },
+            { title: "张公桥", point: "103.776113,29.576511" },
+            { title: "峨眉山", point: "103.355762,29.567774" },
+
+            //昆明
+            { title: "昆明南站", point: "102.866804,24.875981" },
+            { title: "中天阳光", point: "102.664044,25.056088" },
+            { title: "西城时代", point: "102.659833,25.070868" },
+            { title: "海埂公园", point: "102.665287,24.964744" },
+            { title: "双桥夜市", point: "102.742204,25.012362" },
+            { title: "翠湖公园", point: "102.710024,25.054679" },
+            { title: "恒隆广场", point: "102.728026,25.043222" },
+            { title: "南屏步行街", point: "102.717959,25.043361" },
+            { title: "昆明老街", point: "102.715775,25.047969" },
+            { title: "吾悦广场", point: "102.66511,25.095941" },
+            { title: "斗南花市", point: "102.794696,24.908417" },
+            { title: "官渡古镇", point: "102.760903,24.960282" },
+            { title: "文学艺术馆", point: "102.763051,24.956918" },
+            { title: "西亮塘湿地", point: "102.743035,24.941626" },
+            { title: "国际会展中心", point: "102.714834,24.949759" },
+        ];
+
+        var point = new Array(); //存放标注点经纬信息的数组
+        var marker = new Array(); //存放标注点对象的数组
+        for (var i = 0; i < markerArr.length; i++) {
+            var p0 = markerArr[i].point.split(",")[0]; //
+            var p1 = markerArr[i].point.split(",")[1]; //按照原数组的point格式将地图点坐标的经纬度分别提出来
+            point[i] = new window.BMapGL.Point(p0, p1); //循环生成新的地图点
+            marker[i] = new window.BMapGL.Marker(point[i]); //按照地图点坐标生成标记
+            map.addOverlay(marker[i]);
+            var label = new window.BMapGL.Label(markerArr[i].title, { offset: new window.BMapGL.Size(-10, 0) });
+            marker[i].setLabel(label);
+        }
+    }
+
+
+</script>
+
+</html>
