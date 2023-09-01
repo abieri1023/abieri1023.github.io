@@ -34,10 +34,6 @@
         }
     </style>
     <style type="text/css">
-        html {
-            height: 100%
-        }
-
         body {
             height: 100%;
         }
@@ -58,7 +54,7 @@
                 <font style="color: #095eb3; background-color: #b3d2ee;
                 border-radius: 8px;padding-left: 30px;padding-right: 30px;">到此一游</font>
             </div>
-            <button onclick="javascript:history.back()" style="font-size: 20px;">◀ 返回主页</button>
+            <button id="closeButton" style="font-size: 20px;width: 80px;">关闭</button>
             <div>
                 <button onclick="javascript:makeJYAddress();">江油</button>
                 <button onclick="javascript:makeMYAddress();">绵阳</button>
@@ -72,7 +68,7 @@
             z-index: 1;left: 60px;border-radius: 5px;padding-left: 10px;
             padding-right: 10px;color: rgb(52, 117, 183)">地点可选择 地图可缩放 卡顿请重进</div>
             <div>
-                <div id="container" style="height: 500px;"></div>
+                <div id="container" style="height: 490px;"></div>
             </div>
             <div style="margin-top: 10px;"></div>
         </div>
@@ -95,6 +91,19 @@
     }
 </style>
 <script>
+    // 获取父页面的window对象
+    var parentWindow = window.parent;
+
+    // 获取关闭按钮元素
+    var closeButton = document.getElementById('closeButton');
+
+    // 给关闭按钮添加点击事件的监听器
+    closeButton.addEventListener('click', function () {
+        // 使用父页面的window对象来关闭iframe
+        parentWindow.showTable();
+    });
+</script>
+<script>
     // 创建地图实例
     var map = new BMapGL.Map("container", {
         enableRotate: false,
@@ -111,27 +120,27 @@
         initMap(point);
     }
     function makeCDAddress() {
-        point = new BMapGL.Point(104.07246,30.663638);  // 成都
+        point = new BMapGL.Point(104.07246, 30.663638);  // 成都
         initMap(point);
     }
     function makeZGAddress() {
-        point = new BMapGL.Point(104.785227,29.345113);  // 自贡
+        point = new BMapGL.Point(104.785227, 29.345113);  // 自贡
         initMap(point);
     }
     function makeYBAddress() {
-        point = new BMapGL.Point(104.652686,28.770612);  // 宜宾
+        point = new BMapGL.Point(104.652686, 28.770612);  // 宜宾
         initMap(point);
     }
     function makeLSAddress() {
-        point = new BMapGL.Point(103.766216,29.559197);  // 乐山
+        point = new BMapGL.Point(103.766216, 29.559197);  // 乐山
         initMap(point);
     }
     function makeKMAddress() {
-        point = new BMapGL.Point(102.726013,25.044498);  // 昆明
+        point = new BMapGL.Point(102.726013, 25.044498);  // 昆明
         initMap(point);
     }
 
-    function initMap(point){
+    function initMap(point) {
         map.centerAndZoom(point, 13);                 // 初始化地图，设置中心点坐标和地图级别
         map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
         var cityCtrl = new BMapGL.CityListControl();  // 添加城市列表控件

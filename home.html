@@ -4,12 +4,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>这是我的个人主页</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
-	<link rel="shortcut icon" href="home.ico">
+    <link rel="shortcut icon" href="home.ico">
     <style>
         @media (min-width: 0px) and (max-width:380px) {
             .div1 {
                 width: 380px;
-                height: 85px;
+                height: 65px;
                 border-radius: 8px;
                 background-color: #cfe6f7;
             }
@@ -18,7 +18,7 @@
         @media (min-width: 380px) and (max-width:500px) {
             .div1 {
                 width: auto;
-                height: 85px;
+                height: 65px;
                 border-radius: 8px;
                 background-color: #cfe6f7;
             }
@@ -27,7 +27,7 @@
         @media (min-width: 500px) {
             .div1 {
                 width: 380px;
-                height: 85px;
+                height: 65px;
                 border-radius: 8px;
                 background-color: #cfe6f7;
             }
@@ -37,36 +37,52 @@
 
 <body>
     <div class="div1">
-        <div style="width: auto;border: 1px solid green;text-align:center;border-radius: 10px;">
+        <div id="mainDiv" style="width: auto;border: 1px solid green;text-align:center;border-radius: 10px;">
             <div style="height: 60px;display: flex;align-items: center;
         justify-content: center;font-size: 30px;">
                 <font style="color: #095eb3; background-color: #b3d2ee;
                 border-radius: 8px;padding-left: 30px;padding-right: 30px;">这是我的个人主页</font>
             </div>
-            <button onclick="window.location.href='./resume.html'" style="font-size: 20px;width: 150px;">我的简历</button>
-            <table style="width: 100%;">
+            <div style="height: 10px;"></div>
+            <table id="myTable" style="align-content: center;width: 100%;">
                 <tr>
-                    <td><button onclick="window.location.href='./memory.html'">个人自传</button></td>
-                    <td><button onclick="window.location.href='./map.html'">到此一游</button></td>
-                    <td><button onclick="window.location.href='./photo.html'">一些照片</button></td>
+                    <td><button onclick="openInDiv('./resume.html')">我的简历</button></td>
+                    <td><button onclick="openInDiv('./memory.html')">个人自传</button></td>
+                    <td><button onclick="openInDiv('./photo.html')">一些照片</button></td>
                 </tr>
                 <tr>
-                    <td><button onclick="window.location.href='./ready.html'">未来准备</button></td>
-                    <td><button onclick="window.location.href='./wish.html'">愿望列表</button></td>
+                    <td><button onclick="openInDiv('./map.html')">到此一游</button></td>
+                    <td><button onclick="openInDiv('./ready.html')">未来准备</button></td>
+                    <td><button onclick="openInDiv('./wish.html')">愿望列表</button></td>
                 </tr>
                 <tr>
-                    <td><hr><button onclick="window.location.href='./create.html'">我的创作</button></td>
-                    <td><hr><button onclick="window.location.href='./good.html'">好用工具</button></td>
-                    <td><hr><button onclick="window.location.href='./blank.html'">暂时空白</button></td>
+                    <td>
+                        <hr><button onclick="openInDiv('./create.html')">我的创作</button>
+                    </td>
+                    <td>
+                        <hr><button onclick="openInDiv('./good.html')">好用工具</button>
+                    </td>
+                    <td>
+                        <hr><button onclick="openInDiv('./blank.html')">暂时空白</button>
+                    </td>
                 </tr>
                 <tr>
-                    <td><hr><button onclick="window.location.href='./index.html'">老汉上班</button></td>
-                    <td><hr><button onclick="window.location.href='./heart.html'">一颗爱心</button></td>
+                    <td>
+                        <hr><button onclick="window.location.href='./index.html'">老汉上班</button>
+                    </td>
+                    <td>
+                        <hr><button onclick="window.location.href='./heart.html'">一颗爱心</button>
+                    </td>
+                    <td>
+                        <hr><button onclick="window.location.href='./idea/'">目录索引</button>
+                    </td>
                 </tr>
             </table>
-
         </div>
-        
+        <div id="myDiv"></div>
+        <button style="position: fixed;bottom: 10px;right: 10px;
+        background: #ffffff00;" onclick="showTable()">显示</button>
+
 </body>
 <style>
     button {
@@ -87,6 +103,58 @@
     }
 </style>
 <script>
+
+    var table = document.getElementById("myTable");
+    var div = document.getElementById("mainDiv");
+    var myDiv = document.getElementById("myDiv");
+    div.style.height = "70px";
+
+    // 重新设置布局属性
+    table.style.display = "table";
+    table.style.width = "100%";
+    table.style.height = "auto";
+
+    // 显示表格
+    table.style.visibility = "hidden";
+
+    var iframe = document.createElement('iframe');
+
+    function showTable() {
+        if (table.style.visibility == "hidden") {
+            table.style.visibility = "visible";
+            div.style.height = "320px";
+            iframe.parentNode.removeChild(iframe);
+        } else {
+            table.style.visibility = "hidden";
+            div.style.height = "70px";
+            if (myDiv.style.visibility == "visible") {
+                myDiv.style.visibility = "hidden";
+            } else {
+                myDiv.style.visibility == "visible"
+            }
+        }
+
+    }
+
+    function openInDiv(src) {
+        if (table.style.visibility == "hidden") {
+            table.style.visibility = "visible";
+        } else {
+            table.style.visibility = "hidden";
+        }
+        div.style.height = "70px";
+        iframe = document.createElement('iframe');
+        iframe.src = src;
+        iframe.style.width = '100%';
+        iframe.style.borderRadius = '8px';
+        iframe.style.border = 'none';
+        // 等待iframe加载完成后获取内容高度
+        iframe.onload = function () {
+            var contentHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+            iframe.style.height = contentHeight * 1.1 + 'px';
+        };
+        document.getElementById('myDiv').appendChild(iframe);
+    }
 </script>
 
 </html>

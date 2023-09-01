@@ -43,31 +43,31 @@
                 <font style="color: #095eb3; background-color: #b3d2ee;
                 border-radius: 8px;padding-left: 30px;padding-right: 30px;">个人自传</font>
             </div>
-            <button onclick="javascript:history.back()" style="font-size: 20px;">◀ 返回主页</button>
-                        <!-- 这里开始 -->
-                        <div style="width: auto;text-align: left;">
-                            <strong>一、个人自传</strong><br>
-                            1、幼儿园：<br>
-                            2、小学：<br>
-                            3、初中：<br>
-                            4、高中：高考没考好。<br>
-                            5、大学：考研也没考上。<br>
-                            6、总结：什么都是一般般，混得走就行，不求自己有多厉害了。
-                            努力争取，可以的话尝试体验，争取不到就算了。
-                            要承认别人厉害，自己吃好喝好最重要。<br>
-                            7、未来：
-                            <hr>
-                            <strong>二、项目历程</strong><br>
-                            1、PHP+HTML+MySQL 老狗之家<br>
-                            2、Java+Swing 飞翔的小鸟<br>
-                            3、APP+SQLite 老狗之家<br>
-                            4、JavaWeb+JDBC 党途<br>
-                            5、Spring+JDBC 宠物管家<br>
-                            6、SpringBoot+Vue+WeChatAPP+MyBatis 月子中心<br>
-                            7、Hadoop+CNN 一眼丁真<br>
-                            <hr>
-                        </div>
-                        <!-- 这里结束 -->
+            <button id="closeButton" style="font-size: 20px;width: 80px;">关闭</button>
+            <!-- 这里开始 -->
+            <div style="width: auto;text-align: left;">
+                <strong>一、个人自传</strong><br>
+                1、幼儿园：<br>
+                2、小学：<br>
+                3、初中：<br>
+                4、高中：高考没考好。<br>
+                5、大学：考研也没考上。<br>
+                6、总结：什么都是一般般，混得走就行，不求自己有多厉害了。
+                努力争取，可以的话尝试体验，争取不到就算了。
+                要承认别人厉害，自己吃好喝好最重要。<br>
+                7、未来：
+                <hr>
+                <strong>二、项目历程</strong><br>
+                1、PHP+HTML+MySQL 老狗之家<br>
+                2、Java+Swing 飞翔的小鸟<br>
+                3、APP+SQLite 老狗之家<br>
+                4、JavaWeb+JDBC 党途<br>
+                5、Spring+JDBC 宠物管家<br>
+                6、SpringBoot+Vue+WeChatAPP+MyBatis 月子中心<br>
+                7、Hadoop+CNN 一眼丁真<br>
+                <hr>
+            </div>
+            <!-- 这里结束 -->
         </div>
     </div>
 </body>
@@ -87,7 +87,17 @@
     }
 </style>
 <script>
+    // 获取父页面的window对象
+    var parentWindow = window.parent;
 
+    // 获取关闭按钮元素
+    var closeButton = document.getElementById('closeButton');
+
+    // 给关闭按钮添加点击事件的监听器
+    closeButton.addEventListener('click', function () {
+        // 使用父页面的window对象来关闭iframe
+        parentWindow.showTable();
+    });
 </script>
 
 </html>
