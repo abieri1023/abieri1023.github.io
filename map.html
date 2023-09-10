@@ -26,7 +26,7 @@
 
         @media (min-width: 500px) {
             .div1 {
-                width: 350px;
+                width: auto;
                 height: 85px;
                 border-radius: 8px;
                 background-color: #cfe6f7;
@@ -111,37 +111,41 @@
     });
     var point = new BMapGL.Point(104.749537, 31.781919); //默认江油
     initMap(point);
+    map.centerAndZoom(point, 13);   // 初始化地图，设置中心点坐标和地图级别
     function makeJYAddress() {
         point = new BMapGL.Point(104.749537, 31.781919);  // 江油
-        initMap(point);
+        updateMap(point);
     }
     function makeMYAddress() {
         point = new BMapGL.Point(104.75455, 31.467996);  // 绵阳
-        initMap(point);
+        updateMap(point);
     }
     function makeCDAddress() {
         point = new BMapGL.Point(104.07246, 30.663638);  // 成都
-        initMap(point);
+        updateMap(point);
     }
     function makeZGAddress() {
         point = new BMapGL.Point(104.785227, 29.345113);  // 自贡
-        initMap(point);
+        updateMap(point);
     }
     function makeYBAddress() {
         point = new BMapGL.Point(104.652686, 28.770612);  // 宜宾
-        initMap(point);
+        updateMap(point);
     }
     function makeLSAddress() {
         point = new BMapGL.Point(103.766216, 29.559197);  // 乐山
-        initMap(point);
+        updateMap(point);
     }
     function makeKMAddress() {
         point = new BMapGL.Point(102.726013, 25.044498);  // 昆明
-        initMap(point);
+        updateMap(point);
+    }
+
+    function updateMap(point) {
+        map.setCenter(point);
     }
 
     function initMap(point) {
-        map.centerAndZoom(point, 13);                 // 初始化地图，设置中心点坐标和地图级别
         map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
         var cityCtrl = new BMapGL.CityListControl();  // 添加城市列表控件
         map.addControl(cityCtrl);
@@ -181,7 +185,7 @@
             { title: "太古里", point: "104.09012,30.658842" },
             { title: "宽窄巷子", point: "104.060251,30.669916" },
             { title: "春熙路", point: "104.084168,30.661784" },
-            { title: "人民公园", point: "104.063884,30.663974" },
+            { title: "锦里", point: "104.05624,30.65182" },
 
             //自贡
             { title: "四川轻化工大学", point: "104.772184,29.339792" },
@@ -228,9 +232,15 @@
             { title: "吾悦广场", point: "102.66511,25.095941" },
             { title: "斗南花市", point: "102.794696,24.908417" },
             { title: "官渡古镇", point: "102.760903,24.960282" },
-            { title: "文学艺术馆", point: "102.763051,24.956918" },
+            { title: "云南文学艺术馆", point: "102.763051,24.956918" },
             { title: "西亮塘湿地", point: "102.743035,24.941626" },
             { title: "国际会展中心", point: "102.714834,24.949759" },
+            { title: "昆明市博物馆", point: "102.734876,25.038932" },
+            { title: "昆明市博物馆", point: "102.734876,25.038932" },
+            { title: "弥勒寺公园", point: "102.705613,25.036549" },
+            { title: "麻园", point: "102.683149,25.058074" },
+            { title: "大观公园", point: "102.68038,25.029489" },
+            { title: "万达广场", point: "102.71655,25.014115" },
         ];
 
         var point = new Array(); //存放标注点经纬信息的数组
