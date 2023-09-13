@@ -74,7 +74,7 @@
                         <hr><button onclick="window.location.href='./heart.html'">一颗爱心</button>
                     </td>
                     <td>
-                        <hr><button onclick="window.location.href='./idea/'">目录索引</button>
+                        <hr><button onclick="myIdea()">目录索引</button>
                     </td>
                 </tr>
             </table>
@@ -153,6 +153,13 @@
             iframe.style.height = contentHeight * 1.1 + 'px';
         };
         document.getElementById('myDiv').appendChild(iframe);
+    }
+
+    function myIdea() {
+        var inputVal = prompt("请输入内容：");
+        if(inputVal != null){
+            window.open('https://github.com/abieri1023/abieri1023.github.io/blob/main/idea/'+inputVal+'.md');
+        }
     }
 </script>
 
