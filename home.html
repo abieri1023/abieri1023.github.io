@@ -56,6 +56,9 @@
                     <td><button onclick="openInDiv('./wish.html')">愿望列表</button></td>
                 </tr>
                 <tr>
+                    <td><button onclick="openInDiv('./bored.html')">没有事干</button></td>
+                </tr>
+                <tr>
                     <td>
                         <hr><button onclick="openInDiv('./create.html')">我的创作</button>
                     </td>
@@ -121,7 +124,7 @@
     function showTable() {
         if (table.style.visibility == "hidden") {
             table.style.visibility = "visible";
-            div.style.height = "320px";
+            div.style.height = "380px";
             iframe.parentNode.removeChild(iframe);
         } else {
             table.style.visibility = "hidden";
