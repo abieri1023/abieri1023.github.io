@@ -63,6 +63,8 @@
                 <button onclick="javascript:makeYBAddress();">宜宾</button>
                 <button onclick="javascript:makeLSAddress();">乐山</button>
                 <button onclick="javascript:makeKMAddress();">昆明</button>
+                <button onclick="javascript:makeSHAddress();">上海</button>
+                <button onclick="javascript:makeHZAddress();">杭州</button>
             </div>
             <div style="background-color:#f1fbfd;position: absolute;
             z-index: 1;left: 60px;border-radius: 5px;padding-left: 10px;
@@ -138,6 +140,14 @@
     }
     function makeKMAddress() {
         point = new BMapGL.Point(102.726013, 25.044498);  // 昆明
+        updateMap(point);
+    }
+    function makeSHAddress() {
+        point = new BMapGL.Point(121.490889,31.22506);  // 上海
+        updateMap(point);
+    }
+    function makeHZAddress() {
+        point = new BMapGL.Point(120.193663,30.249588);  // 杭州
         updateMap(point);
     }
 
@@ -246,6 +256,49 @@
             { title: "星海半岛湿地公园", point: "102.694717,24.956252" },
             { title: "西南林业大学", point: "102.766051,25.065074" },
             { title: "昆明同德广场", point: "102.730039,25.074507" },
+            { title: "长水机场", point: "102.939547,25.108243" },
+            
+            //上海
+            { title: "浦东机场", point: "121.800351,31.1627" },
+            { title: "外滩", point: "121.497204,31.243453" },
+            { title: "南京路步行街", point: "121.492631,31.243684" },
+            { title: "上海国金", point: "121.509123,31.241826" },
+            { title: "东方明珠", point: "121.506388,31.245145" },
+            { title: "外白渡桥", point: "121.496812,31.249097" },
+            { title: "一大会址", point: "121.481954,31.225965" },
+            { title: "豫园", point: "121.498921,31.232547" },
+            { title: "上海之鱼", point: "121.506068,30.93731" },
+            { title: "南浦大桥", point: "121.512202,31.210987" },
+            { title: "徐家汇公园", point: "121.446112,31.203359" },
+            { title: "四行仓库", point: "121.477586,31.246308" },
+            { title: "1933老场坊", point: "121.498611,31.260157" },
+            { title: "汤臣一品", point: "121.508276,31.238529" },
+            { title: "上海中心", point: "121.511937,31.239212" },
+            { title: "世博园", point: "121.493294,31.192336" },
+            { title: "武康路", point: "121.444561,31.210723" },
+            { title: "复旦大学", point: "121.510771,31.301911" },
+            { title: "五角场", point: "121.52119,31.303803" },
+            { title: "丽园公园", point: "121.485647,31.213246" },
+            { title: "南桥汽车站", point: "121.486615,30.920077" },
+            { title: "人民公园", point: "121.479656,31.238252" },
+            { title: "国际妇幼保健院", point: "121.513982,30.964679" },
+            { title: "天街", point: "121.519165,30.973153" },
+            { title: "上海南站", point: "121.435865,31.159439" },
+            
+
+            //杭州
+            { title: "杭州南站", point: "120.302677,30.17722" },
+            { title: "苏堤", point: "120.14608,30.245256" },
+            { title: "断桥残雪", point: "120.157866,30.26416" },
+            { title: "银泰in77", point: "120.169032,30.259107" },
+            { title: "南宋御街", point: "120.177445,30.249336" },
+            { title: "五柳巷", point: "120.183434,30.247847" },
+            { title: "西湖文化广场", point: "120.169679,30.282218" },
+            { title: "阿里巴巴", point: "120.028664,30.289087" },
+            { title: "大马弄", point: "120.175201,30.24056" },
+            { title: "灯火阑珊青旅", point: "120.218354,30.217732" },
+            { title: "雷峰塔", point: "120.155334,30.236726" },
+
         ];
 
         var point = new Array(); //存放标注点经纬信息的数组
