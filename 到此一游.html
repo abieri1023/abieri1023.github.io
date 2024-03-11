@@ -65,6 +65,7 @@
                 <button onclick="javascript:makeKMAddress();">昆明</button>
                 <button onclick="javascript:makeSHAddress();">上海</button>
                 <button onclick="javascript:makeHZAddress();">杭州</button>
+                <button onclick="javascript:makeSZAddress();">苏州</button>
             </div>
             <div style="background-color:#f1fbfd;position: absolute;
             z-index: 1;left: 60px;border-radius: 5px;padding-left: 10px;
@@ -148,6 +149,10 @@
     }
     function makeHZAddress() {
         point = new BMapGL.Point(120.193663,30.249588);  // 杭州
+        updateMap(point);
+    }
+    function makeSZAddress() {
+        point = new BMapGL.Point(120.707796,31.31043);  // 苏州
         updateMap(point);
     }
 
