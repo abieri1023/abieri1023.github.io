@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>老汉今天是什么班？</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
+    <link rel="shortcut icon" href="home.ico">
+    <style>
+        @media (min-width: 0px) and (max-width:350px) {
+            .div1 {
+                width: 350px;
+                height: 85px;
+                border-radius: 8px;
+                background-color: #cfe6f7;
+            }
+        }
+
+        @media (min-width: 350px) and (max-width:500px) {
+            .div1 {
+                width: auto;
+                height: 75px;
+                border-radius: 8px;
+                background-color: #cfe6f7;
+            }
+        }
+
+        @media (min-width: 500px) {
+            .div1 {
+                width: 350px;
+                height: 85px;
+                border-radius: 8px;
+                background-color: #cfe6f7;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="div1">
+        <div style="width: auto;border: 2px solid green;text-align:center;border-radius: 10px;">
+            <div style="height: 20px;display: flex;align-items: center;
+        justify-content: center;font-size: 25px;padding-top: 10px;">
+                <font style="color: #014f9d; background-color: #b3d2ee;
+                border-radius: 8px;padding-left: 30px;padding-right: 30px;
+                border: 0.5px solid green;">老汉今天是什么班？</font>
+            </div>
+
+
+            <div style="background-color: #f4fff5;border-radius: 8px;">
+
+                <div style="border: 0px solid green;padding-bottom: 10px;padding-top: 15px;
+            background-color: #f4fff5;border-radius: 8px;">
+                    <input style="font-size: 25px; width: 160px;border: 0px solid;
+                background-color: #f4fff5;" type="date" id="endDate" onchange="cleanDate()">
+                    <label style="font-size: 25px;" for="endDate">是什么班？</label>
+                    <div>
+                        <button style="width: 130px;height: 60px;font-size: 40px;
+                    margin-top: 10px;" onclick="calculateDateDifference()">计算</button>
+                    </div>
+                    <div id="result1"></div>
+                    <div id="result2"></div>
+                </div>
+            </div>
+
+            <div id="myDiv" hidden>
+                <div>
+                    <hr>
+                    <a style="color: red;font-size: 20px;font-weight:bolder;">点击下面按钮可以给幺儿打钱！</a>
+                    ⬇&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇
+                    <p></p>
+                </div>
+
+                <a style="background-color: #6ad16a;padding: 10px;font-size: 20px;
+            color: white;border-radius: 8px;" href="weixin://">打开微信</a>
+                <a style="background-color: #6fb1f3;padding: 10px;font-size: 20px;
+            color: white;border-radius: 8px;" href="alipays://">打开支付宝</a>
+                <div style="padding-top: 40px;"></div>
+                <w style="font-size: 18px;">不想打钱可以点这里！</w>
+                <div></div>
+                <img id="image"></img>
+            </div>
+        </div>
+        <div style="width: auto;text-align:center;border-radius: 10px;margin-top: 5px;">
+            <button style="height: 45px;" onclick="toggleVisibility1()">觉得好用可以点这里！有好东西哟！</button>
+            <button style="height: 45px;" onclick="toggleVisibility2()">不好用！</button>
+            <div id="marqueeContent">
+                使用说明：点击日期可以选择时间！
+            </div>
+        </div>
+
+
+</body>
+<style>
+    input[type="date"] {
+        outline: none;
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    button {
+        background-color: #75b6f6;
+        color: white;
+        height: 40px;
+        border: 0;
+        font-size: 16px;
+        border-radius: 8px;
+    }
+
+    button:hover {
+        background-color: #4ba2f9
+    }
+
+    #result1 {
+        font-size: 35px;
+        font-weight: bold;
+    }
+
+    #result2 {
+        font-size: 30px;
+        font-weight: bold;
+    }
+</style>
+<script>
+    function toggleVisibility1() {
+        document.getElementById("myDiv").style.display = "block";
+    }
+    function toggleVisibility2() {
+        document.getElementById("myDiv").style.display = "none";
+    }
+    const textElement = document.querySelector('w');
+    const imageContainer = document.querySelector('#image-container');
+
+    textElement.addEventListener('click', function () {
+        document.getElementById("image").style.height = "150px";
+        document.getElementById("image").src = "./img/3.gif";
+    });
+
+    function cleanDate() {
+        document.getElementById("result1").innerHTML = "";
+        document.getElementById("result2").innerHTML = "";
+    }
+
+    function calculateDateDifference() {
+        var startDate = new Date("2023-07-02");
+        var endDate = new Date(document.getElementById("endDate").value);
+
+        var millisecondsPerDay = 24 * 60 * 60 * 1000;
+        var daysDifference = Math.round(Math.abs((endDate - startDate) / millisecondsPerDay));
+
+        var day = "异常";
+        var dayId = daysDifference % 5;
+        switch (dayId) {
+            case 0:
+                day = "第1个夜班";
+                break;
+            case 1:
+                day = "第2个夜班";
+                break;
+            case 2:
+                day = "第1个白班";
+                break;
+            case 3:
+                day = "第2个白班";
+                break;
+            case 4:
+                day = "休息天";
+                break;
+        }
+        document.getElementById("result1").style.color = '#FF0000';
+        document.getElementById("result1").innerHTML = "这天是 " + day;
+        document.getElementById("result2").innerHTML = "已经上了 " + daysDifference + " 天班";
+    }
+
+    // 设置结束日期的默认值为当前日期
+    var currentDate = new Date();
+    var endDateInput = document.getElementById("endDate");
+    endDateInput.value = getCurrentTime().slice(0, 10);
+    // 获取当前时间ISO格式字符串
+    function getCurrentTime() {
+        let datetime = new Date();
+        let timezoneOffset = datetime.getTimezoneOffset() * 60000; // 获取当前时区与UTC的时间差（以毫秒为单位）
+        let localDatetime = new Date(datetime - timezoneOffset); // 调整时间，得到当前时区时间
+        let isoString = localDatetime.toISOString();
+        return isoString;
+    }
+
+</script>
+<script>
+</script>
+
+</html>
