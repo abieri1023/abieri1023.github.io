@@ -2,7 +2,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>老汉今天是什么班？</title>
+    <title>排班小程序</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
     <link rel="shortcut icon" href="home.ico">
     <style>
@@ -32,19 +32,123 @@
                 background-color: #cfe6f7;
             }
         }
+
+        /* 新增样式 */
+        #recentShifts .shift-date {
+            font-size: 20px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        #recentShifts .shift-status {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .shift-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .date-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .relative-day {
+            color: #666;
+            font-size: 20px;
+            min-width: 50px;
+            font-weight: bold;
+        }
+
+        .week-day {
+            color: #999;
+            font-size: 20px;
+            margin-right: 8px;
+        }
+
+        .shift-date {
+            color: #444;
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .shift-status {
+            font-size: 20px;
+            font-weight: bold;
+            min-width: 100px;
+            text-align: right;
+        }
     </style>
 </head>
 
 <body>
+
     <div class="div1">
         <div style="width: auto;border: 2px solid green;text-align:center;border-radius: 10px;">
             <div style="height: 20px;display: flex;align-items: center;
         justify-content: center;font-size: 25px;padding-top: 10px;">
                 <font style="color: #014f9d; background-color: #b3d2ee;
                 border-radius: 8px;padding-left: 30px;padding-right: 30px;
-                border: 0.5px solid green;">老汉今天是什么班？</font>
+                border: 0.5px solid green;">排班小程序</font>
             </div>
 
+            <br>
+
+            <!-- 修改后的垂直排班展示容器 -->
+            <div id="recentShifts" style="margin-bottom: 20px; padding: 10px; background: #e8f4ff; border-radius: 8px;">
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <!-- 重复4个日期项 -->
+                    <div class="shift-item">
+                        <div class="date-info">
+                            <span class="relative-day"></span>
+                            <div>
+                                <span class="week-day"></span>
+                                <span class="shift-date"></span>
+                            </div>
+                        </div>
+                        <div class="shift-status"></div>
+                    </div>
+                    <div class="shift-item">
+                        <div class="date-info">
+                            <span class="relative-day"></span>
+                            <div>
+                                <span class="week-day"></span>
+                                <span class="shift-date"></span>
+                            </div>
+                        </div>
+                        <div class="shift-status"></div>
+                    </div>
+                    <div class="shift-item">
+                        <div class="date-info">
+                            <span class="relative-day"></span>
+                            <div>
+                                <span class="week-day"></span>
+                                <span class="shift-date"></span>
+                            </div>
+                        </div>
+                        <div class="shift-status"></div>
+                    </div>
+                    <div class="shift-item">
+                        <div class="date-info">
+                            <span class="relative-day"></span>
+                            <div>
+                                <span class="week-day"></span>
+                                <span class="shift-date"></span>
+                            </div>
+                        </div>
+                        <div class="shift-status"></div>
+                    </div>
+                    <!-- 复制3个相同结构的shift-item -->
+                </div>
+            </div>
 
             <div style="background-color: #f4fff5;border-radius: 8px;">
 
@@ -54,7 +158,7 @@
                 background-color: #f4fff5;" type="date" id="endDate" onchange="cleanDate()">
                     <label style="font-size: 25px;" for="endDate">是什么班？</label>
                     <div>
-                        <button style="width: 130px;height: 60px;font-size: 40px;
+                        <button style="width: 130px;height: 60px;font-size: 30px;
                     margin-top: 10px;" onclick="calculateDateDifference()">计算</button>
                     </div>
                     <div id="result1"></div>
@@ -65,7 +169,7 @@
             <div id="myDiv" hidden>
                 <div>
                     <hr>
-                    <a style="color: red;font-size: 20px;font-weight:bolder;">点击下面按钮可以给幺儿打钱！</a>
+                    <a style="color: red;font-size: 20px;font-weight:bolder;">点击下面按钮可以给娃打钱！</a>
                     ⬇&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇
                     <p></p>
                 </div>
@@ -75,9 +179,6 @@
                 <a style="background-color: #6fb1f3;padding: 10px;font-size: 20px;
             color: white;border-radius: 8px;" href="alipays://">打开支付宝</a>
                 <div style="padding-top: 40px;"></div>
-                <w style="font-size: 18px;">不想打钱可以点这里！</w>
-                <div></div>
-                <img id="image"></img>
             </div>
         </div>
         <div style="width: auto;text-align:center;border-radius: 10px;margin-top: 5px;">
@@ -126,19 +227,73 @@
     }
 </style>
 <script>
+    // 新增函数：获取指定日期的班次
+    function getShiftStatus(targetDate) {
+        var startDate = new Date("2023-07-02");
+        var millisecondsPerDay = 24 * 60 * 60 * 1000;
+        var daysDifference = Math.round((targetDate - startDate) / millisecondsPerDay);
+
+        var dayId = daysDifference % 5;
+        switch (dayId) {
+            case 0: return "第1个夜班";
+            case 1: return "第2个夜班";
+            case 2: return "第1个白班";
+            case 3: return "第2个白班";
+            case 4: return "休息天";
+            default: return "异常";
+        }
+    }
+
+    // 修改后的生成函数
+    function generateRecentShifts() {
+        const shiftItems = document.querySelectorAll('.shift-item');
+        const today = new Date();
+        const dayLabels = ['昨天', '今天', '明天', '后天']; // 新增日期类型标签
+
+        shiftItems.forEach((item, index) => {
+            const date = new Date(today);
+            const dayOffset = index - 1; // 生成昨天(-1)、今天(0)、明天(1)、后天(2)
+            date.setDate(date.getDate() + dayOffset);
+
+            // 设置日期类型标签
+            const relativeDay = item.querySelector('.relative-day');
+            relativeDay.textContent = dayLabels[index];
+
+            // 设置星期和日期
+            const weekDay = item.querySelector('.week-day');
+            weekDay.textContent = date.toLocaleDateString('zh-CN', { weekday: 'short' });
+
+            const dateElement = item.querySelector('.shift-date');
+            dateElement.textContent = date.toLocaleDateString('zh-CN', { month: '2-digit', day: '2-digit' });
+
+            // 设置班次状态
+            const statusElement = item.querySelector('.shift-status');
+            const status = getShiftStatus(date);
+            statusElement.textContent = status;
+            statusElement.style.color = status === '休息天' ? '#4CAF50' : '#FF5722';
+
+            // 高亮今天
+            if (index === 1) { // 第二个元素是今天
+                item.style.background = "linear-gradient(90deg, #e3f2fd, #f0f8ff)";
+                item.style.border = "1px solid #4ba2f9";
+                relativeDay.style.color = "#2196F3";
+            }
+        });
+    }
+
+    // 页面加载时自动生成排班信息
+    window.addEventListener('load', function () {
+        generateRecentShifts();
+        // 保持原有的当前日期设置
+        endDateInput.value = getCurrentTime().slice(0, 10);
+    });
+
     function toggleVisibility1() {
         document.getElementById("myDiv").style.display = "block";
     }
     function toggleVisibility2() {
         document.getElementById("myDiv").style.display = "none";
     }
-    const textElement = document.querySelector('w');
-    const imageContainer = document.querySelector('#image-container');
-
-    textElement.addEventListener('click', function () {
-        document.getElementById("image").style.height = "150px";
-        document.getElementById("image").src = "./img/3.gif";
-    });
 
     function cleanDate() {
         document.getElementById("result1").innerHTML = "";
