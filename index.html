@@ -324,40 +324,50 @@
 
     // 修改后的生成函数
     function generateRecentShifts() {
-        const shiftItems = document.querySelectorAll('.shift-item');
-        const today = new Date();
-        const dayLabels = ['昨天', '今天', '明天', '后天']; // 新增日期类型标签
+    const shiftItems = document.querySelectorAll('.shift-item');
+    // 使用UTC日期的午夜作为基准时间
+    const now = new Date();
+    const todayUTC = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+    const dayLabels = ['昨天', '今天', '明天', '后天'];
 
-        shiftItems.forEach((item, index) => {
-            const date = new Date(today);
-            const dayOffset = index - 1; // 生成昨天(-1)、今天(0)、明天(1)、后天(2)
-            date.setDate(date.getDate() + dayOffset);
+    shiftItems.forEach((item, index) => {
+        const date = new Date(todayUTC);
+        const dayOffset = index - 1; // 调整UTC日期
+        date.setUTCDate(date.getUTCDate() + dayOffset);
 
-            // 设置日期类型标签
-            const relativeDay = item.querySelector('.relative-day');
-            relativeDay.textContent = dayLabels[index];
+        // 设置相对日期标签
+        const relativeDay = item.querySelector('.relative-day');
+        relativeDay.textContent = dayLabels[index];
 
-            // 设置星期和日期
-            const weekDay = item.querySelector('.week-day');
-            weekDay.textContent = date.toLocaleDateString('zh-CN', { weekday: 'short' });
-
-            const dateElement = item.querySelector('.shift-date');
-            dateElement.textContent = date.toLocaleDateString('zh-CN', { month: '2-digit', day: '2-digit' });
-
-            // 设置班次状态
-            const statusElement = item.querySelector('.shift-status');
-            const status = getShiftStatus(date);
-            statusElement.textContent = status;
-            statusElement.style.color = status === '休息天' ? '#4CAF50' : '#FF5722';
-
-            // 高亮今天
-            if (index === 1) { // 第二个元素是今天
-                item.style.background = "linear-gradient(90deg, #e3f2fd, #f0f8ff)";
-                item.style.border = "1px solid #4ba2f9";
-                relativeDay.style.color = "#2196F3";
-            }
+        // 设置基于UTC的星期显示
+        const weekDay = item.querySelector('.week-day');
+        weekDay.textContent = date.toLocaleDateString('zh-CN', { 
+            weekday: 'short', 
+            timeZone: 'UTC' // 强制使用UTC时区
         });
-    }
+
+        // 设置基于UTC的日期显示
+        const dateElement = item.querySelector('.shift-date');
+        dateElement.textContent = date.toLocaleDateString('zh-CN', { 
+            month: '2-digit', 
+            day: '2-digit', 
+            timeZone: 'UTC' // 强制使用UTC时区
+        });
+
+        // 计算班次状态（与下方计算逻辑完全一致）
+        const statusElement = item.querySelector('.shift-status');
+        const status = getShiftStatus(date);
+        statusElement.textContent = status;
+        statusElement.style.color = status === '休息天' ? '#4CAF50' : '#FF5722';
+
+        // 高亮"今天"（UTC基准的今天）
+        if (index === 1) {
+            item.style.background = "linear-gradient(90deg, #e3f2fd, #f0f8ff)";
+            item.style.border = "1px solid #4ba2f9";
+            relativeDay.style.color = "#2196F3";
+        }
+    });
+}
 
     // 页面加载时自动生成排班信息
     window.addEventListener('load', function () {
