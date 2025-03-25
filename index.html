@@ -325,33 +325,36 @@
     // 修改后的生成函数
     function generateRecentShifts() {
     const shiftItems = document.querySelectorAll('.shift-item');
-    // 使用UTC日期的午夜作为基准时间
     const now = new Date();
-    const todayUTC = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+    
+    // 获取东八区基准时间
+    const east8DateString = now.toLocaleDateString('zh-CN', { timeZone: 'Asia/Shanghai' });
+    const [year, month, day] = east8DateString.split('/').map(Number);
+    const todayUTC8 = new Date(Date.UTC(year, month - 1, day));
+    
     const dayLabels = ['昨天', '今天', '明天', '后天'];
 
     shiftItems.forEach((item, index) => {
-        const date = new Date(todayUTC);
-        const dayOffset = index - 1; // 调整UTC日期
+        const date = new Date(todayUTC8);
+        const dayOffset = index - 1;
         date.setUTCDate(date.getUTCDate() + dayOffset);
 
         // 设置相对日期标签
         const relativeDay = item.querySelector('.relative-day');
         relativeDay.textContent = dayLabels[index];
 
-        // 设置基于UTC的星期显示
+        // 设置东八区的星期和日期
         const weekDay = item.querySelector('.week-day');
         weekDay.textContent = date.toLocaleDateString('zh-CN', { 
             weekday: 'short', 
-            timeZone: 'UTC' // 强制使用UTC时区
+            timeZone: 'Asia/Shanghai'  // 东八区时区[7](@ref)
         });
 
-        // 设置基于UTC的日期显示
         const dateElement = item.querySelector('.shift-date');
         dateElement.textContent = date.toLocaleDateString('zh-CN', { 
             month: '2-digit', 
             day: '2-digit', 
-            timeZone: 'UTC' // 强制使用UTC时区
+            timeZone: 'Asia/Shanghai'  // 东八区时区[7](@ref)
         });
 
         // 计算班次状态（与下方计算逻辑完全一致）
