@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
     <link rel="shortcut icon" href="home.ico">
     <style>
-        @media (min-width: 0px) and (max-width: 350px) {
+        @media (min-width: 0px) and (max-width:350px) {
             .div1 {
                 width: 350px;
                 height: 85px;
@@ -15,10 +15,10 @@
             }
         }
 
-        @media (min-width: 350px) and (max-width: 500px) {
+        @media (min-width: 350px) and (max-width:500px) {
             .div1 {
                 width: auto;
-                height: 85px;
+                height: 75px;
                 border-radius: 8px;
                 background-color: #cfe6f7;
             }
@@ -26,12 +26,30 @@
 
         @media (min-width: 500px) {
             .div1 {
-                width: auto;
+                width: 360px;
                 height: 85px;
                 border-radius: 8px;
                 background-color: #cfe6f7;
             }
         }
+    </style>
+    <style>
+        .nav-bar { display: flex; justify-content: center; margin-top: 8px; }
+        .nav-btn {
+            background: linear-gradient(135deg, #4e72df 0%, #849ced 100%);
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(78, 115, 223, 0.25);
+            transition: all 0.2s ease;
+        }
+        .nav-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(78, 115, 223, 0.35); }
+        .page-header { display:flex; align-items:center; justify-content:space-between; height:44px; padding:0 10px; }
+        .nav-right { display:flex; align-items:center; }
+        .page-title { font-size:20px; color:#0b5ea8; background-color:#b3d2ee; border-radius:8px; padding:4px 14px; border:1px solid #5ba46b; }
     </style>
     <style type="text/css">
         body {
@@ -49,12 +67,12 @@
 <body>
 <div class="div1">
     <div style="width: auto;border: 1px solid green;text-align:center;border-radius: 10px;">
-        <div style="height: 60px;display: flex;align-items: center;
-        justify-content: center;font-size: 30px;">
-            <font style="color: #095eb3; background-color: #b3d2ee;
-                border-radius: 8px;padding-left: 30px;padding-right: 30px;">到此一游 截至2024/9</font>
-        </div>
-        <button id="closeButton" style="font-size: 20px;width: 80px;">关闭</button>
+        <div class="page-header">
+             <div class="page-title">到此一游 截至2024/9</div>
+             <div class="nav-right">
+                 <button class="nav-btn" onclick="location.href='index.html'">首页</button>
+             </div>
+         </div>
         <div>
             <button onclick="javascript:makeJYAddress();">江油</button>
             <button onclick="javascript:makeMYAddress();">绵阳</button>
@@ -84,7 +102,8 @@
 </div>
 </body>
 <style>
-    button {
+    /* 只作用于城市选择按钮，避免影响导航按钮 */
+    button:not(.nav-btn) {
         background-color: #6ab0f6;
         color: white;
         height: 40px;
@@ -95,23 +114,11 @@
         margin-bottom: 5px;
     }
 
-    button:hover {
+    button:not(.nav-btn):hover {
         background-color: #5ba9f7
     }
 </style>
-<script>
-    // 获取父页面的window对象
-    var parentWindow = window.parent;
 
-    // 获取关闭按钮元素
-    var closeButton = document.getElementById('closeButton');
-
-    // 给关闭按钮添加点击事件的监听器
-    closeButton.addEventListener('click', function () {
-        // 使用父页面的window对象来关闭iframe
-        parentWindow.showTable();
-    });
-</script>
 <script>
     // 创建地图实例
     var map = new BMapGL.Map("container", {

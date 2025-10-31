@@ -33,15 +33,15 @@
             }
         }
 
-        /* 新增样式 */
+        /* 新增样式（适度缩小字体） */
         #recentShifts .shift-date {
-            font-size: 20px;
+            font-size: 18px;
             color: #666;
             margin-bottom: 5px;
         }
 
         #recentShifts .shift-status {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
         }
 
@@ -49,7 +49,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px;
+            padding: 10px;
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -58,30 +58,30 @@
         .date-info {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
 
         .relative-day {
             color: #666;
-            font-size: 20px;
+            font-size: 18px;
             min-width: 50px;
             font-weight: bold;
         }
 
         .week-day {
             color: #999;
-            font-size: 20px;
+            font-size: 18px;
             margin-right: 8px;
         }
 
         .shift-date {
             color: #444;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 500;
         }
 
         .shift-status {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
             min-width: 100px;
             text-align: right;
@@ -91,7 +91,7 @@
         .calculator-card {
             background: linear-gradient(135deg, #f8fffe 0%, #f0f9ff 100%);
             border-radius: 12px;
-            padding: 25px;
+            padding: 20px;
             box-shadow: 0 4px 20px rgba(78, 115, 223, 0.1);
             border: 1px solid rgba(78, 115, 223, 0.15);
         }
@@ -99,20 +99,20 @@
         .input-group {
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 12px;
             align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .date-input {
             flex: 1;
-            padding: 12px 20px;
+            padding: 10px 16px;
             border: 2px solid #e0e9f3;
             border-radius: 8px;
-            font-size: 18px;
+            font-size: 16px;
             color: #2c3e50;
             background: white;
-            min-width: 220px;
+            min-width: 200px;
             transition: all 0.3s ease;
             box-shadow: 0 2px 6px rgba(78, 115, 223, 0.05);
         }
@@ -124,7 +124,7 @@
         }
 
         .input-label {
-            font-size: 20px;
+            font-size: 18px;
             color: #4e72df;
             font-weight: 600;
             margin-left: 8px;
@@ -134,9 +134,9 @@
             background: linear-gradient(135deg, #4e72df 0%, #849ced 100%);
             color: white;
             border: none;
-            padding: 16px 40px;
+            padding: 12px 28px;
             border-radius: 8px;
-            font-size: 20px;
+            font-size: 18px;
             cursor: pointer;
             transition: all 0.3s ease;
             width: 100%;
@@ -144,13 +144,9 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             display: flex;
-            /* 新增 */
             justify-content: center;
-            /* 新增 */
             align-items: center;
-            /* 新增 */
             gap: 8px;
-            /* 新增（如果有图标时使用） */
         }
 
         .calculate-btn:hover {
@@ -159,22 +155,53 @@
         }
 
         #result1 {
-            font-size: 28px;
+            font-size: 24px;
             color: #2c3e50;
             font-weight: 700;
-            margin: 20px 0 8px;
-            padding: 12px;
+            margin: 16px 0 6px;
+            padding: 10px;
             background: rgba(255, 255, 255, 0.9);
             border-radius: 8px;
-
         }
 
         #result2 {
-            font-size: 18px;
+            font-size: 16px;
             color: #6c757d;
             font-weight: 500;
-            margin-top: 12px;
+            margin-top: 10px;
         }
+    </style>
+    <style>
+        .nav-bar { display: flex; justify-content: center; margin-top: 8px; }
+        .nav-btn {
+            background: linear-gradient(135deg, #4e72df 0%, #849ced 100%);
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(78, 115, 223, 0.25);
+            transition: all 0.2s ease;
+        }
+        .nav-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(78, 115, 223, 0.35); }
+        .page-header { display:flex; align-items:center; justify-content:space-between; height:44px; padding:0 10px; }
+        .nav-right { display:flex; align-items:center; }
+        .page-title { font-size:20px; color:#0b5ea8; background-color:#b3d2ee; border-radius:8px; padding:4px 14px; border:1px solid #5ba46b; }
+        .month-calendar { background:#f8fffe; border-radius:12px; padding:16px; box-shadow:0 4px 20px rgba(78,115,223,0.1); border:1px solid rgba(78,115,223,0.15); margin:10px 10px 20px; }
+        .calendar-header { display:flex; justify-content:space-between; align-items:center; font-weight:600; color:#2c3e50; margin-bottom:10px; }
+        .month-btn { background:#ffffff; color:#2c3e50; border:1px solid #e0e9f3; padding:6px 10px; border-radius:6px; font-size:14px; cursor:pointer; }
+        .month-btn:hover { background:#f5f9ff; }
+        .weekday-header { display:grid; grid-template-columns: repeat(7, 1fr); gap:6px; margin: 6px 0; font-size:12px; color:#6c757d; }
+        .weekday-cell { text-align:center; font-weight:600; }
+        .calendar-grid { display:grid; grid-template-columns: repeat(7, 1fr); gap:6px; }
+        .calendar-cell { background:white; border-radius:8px; padding:8px; box-shadow:0 1px 3px rgba(0,0,0,0.08); text-align:center; }
+        .cell-day { font-weight:700; color:#2c3e50; }
+        .cell-status { font-size:12px; margin-top:4px; }
+        .status-day { color:#1976D2; }
+        .status-night { color:#FF6D00; }
+        .status-rest { color:#4CAF50; }
+        .is-today { border:1px solid #4ba2f9; background:linear-gradient(90deg,#e3f2fd,#f0f8ff); }
     </style>
 </head>
 
@@ -182,16 +209,17 @@
 
     <div class="div1">
         <div style="width: auto;border: 2px solid green;text-align:center;border-radius: 10px;">
-            <div style="height: 20px;display: flex;align-items: center;
-        justify-content: center;font-size: 25px;padding-top: 10px;">
-                <font style="color: #014f9d; background-color: #b3d2ee;
-                border-radius: 8px;padding-left: 30px;padding-right: 30px;
-                border: 0.5px solid green;">排班小程序</font>
-            </div>
+            <div class="page-header">
+                 <div class="page-title">排班小程序</div>
+                 <div class="nav-right">
+                     <button class="nav-btn" onclick="location.href='address.html'">地址页</button>
+                     <button class="nav-btn" onclick="location.href='balance.html'">余额记录</button>
+                 </div>
+             </div>
 
             <br>
 
-            <!-- 修改后的垂直排班展示容器 -->
+             <!-- 修改后的垂直排班展示容器 -->
             <div id="recentShifts" style="margin-bottom: 20px; padding: 10px; background: #e8f4ff; border-radius: 8px;">
                 <div style="display: flex; flex-direction: column; gap: 8px;">
                     <!-- 重复4个日期项 -->
@@ -238,6 +266,16 @@
                     <!-- 复制3个相同结构的shift-item -->
                 </div>
             </div>
+
+            <div class="month-calendar">
+                 <div class="calendar-header">
+                     <button class="month-btn" id="prevMonthBtn">上个月</button>
+                     <div id="calendarHeader"></div>
+                     <button class="month-btn" id="nextMonthBtn">下个月</button>
+                 </div>
+                 <div class="weekday-header" id="weekdayHeader"></div>
+                 <div class="calendar-grid" id="monthCalendarGrid"></div>
+             </div>
 
             <div style="background-color: #f4fff5;border-radius: 8px;">
 
@@ -372,9 +410,108 @@
     });
 }
 
+    function normalizeShift(status) {
+        if (status.indexOf('白班') !== -1) return '白班';
+        if (status.indexOf('夜班') !== -1) return '夜班';
+        if (status.indexOf('休息') !== -1) return '休息';
+        return '异常';
+    }
+
+    let calendarYear, calendarMonth; // month: 1-12
+    let todayInfo = (function() {
+        const now = new Date();
+        const east8String = now.toLocaleDateString('zh-CN', { timeZone: 'Asia/Shanghai' });
+        const [y, m, d] = east8String.split('/').map(Number);
+        return { y, m, d };
+    })();
+
+    function renderCalendarHeader() {
+        const header = document.getElementById('calendarHeader');
+        header.textContent = `${calendarYear}年${('0' + calendarMonth).slice(-2)}月`;
+    }
+
+    function generateMonthlyCalendar() {
+        const y = calendarYear;
+        const m = calendarMonth - 1; // Date使用0-11
+        const firstDay = new Date(y, m, 1);
+        const daysInMonth = new Date(y, m + 1, 0).getDate();
+        const offset = firstDay.getDay(); // 0-6 (周日为0)
+
+        renderCalendarHeader();
+
+        const grid = document.getElementById('monthCalendarGrid');
+        grid.innerHTML = '';
+
+        for (let i = 0; i < offset; i++) {
+            const empty = document.createElement('div');
+            empty.className = 'calendar-cell';
+            empty.style.visibility = 'hidden';
+            grid.appendChild(empty);
+        }
+
+        for (let dayNum = 1; dayNum <= daysInMonth; dayNum++) {
+            const date = new Date(y, m, dayNum);
+            const statusFull = getShiftStatus(date);
+            const statusShort = normalizeShift(statusFull);
+            const cell = document.createElement('div');
+            cell.className = 'calendar-cell';
+
+            // 高亮今天（仅当渲染的月份与今天一致时）
+            if (todayInfo.y === y && todayInfo.m === (m + 1) && todayInfo.d === dayNum) {
+                cell.classList.add('is-today');
+            }
+
+            const dayEl = document.createElement('div');
+            dayEl.className = 'cell-day';
+            dayEl.textContent = dayNum;
+
+            const statusEl = document.createElement('div');
+            statusEl.className = 'cell-status ' + (statusShort === '白班' ? 'status-day' : statusShort === '夜班' ? 'status-night' : statusShort === '休息' ? 'status-rest' : '');
+            statusEl.textContent = statusShort;
+
+            cell.appendChild(dayEl);
+            cell.appendChild(statusEl);
+            grid.appendChild(cell);
+        }
+    }
+
+    function prevMonth() {
+        if (calendarMonth === 1) { calendarMonth = 12; calendarYear--; }
+        else { calendarMonth--; }
+        generateMonthlyCalendar();
+    }
+
+    function nextMonth() {
+        if (calendarMonth === 12) { calendarMonth = 1; calendarYear++; }
+        else { calendarMonth++; }
+        generateMonthlyCalendar();
+    }
+
+    function renderWeekdays() {
+        const names = ['日','一','二','三','四','五','六'];
+        const header = document.getElementById('weekdayHeader');
+        header.innerHTML = '';
+        names.forEach(n => {
+            const span = document.createElement('div');
+            span.className = 'weekday-cell';
+            span.textContent = `周${n}`;
+            header.appendChild(span);
+        });
+    }
+
     // 页面加载时自动生成排班信息
     window.addEventListener('load', function () {
+        // 近期班次
         generateRecentShifts();
+        // 初始化日历年月为东八区当前
+        calendarYear = todayInfo.y; calendarMonth = todayInfo.m;
+        // 渲染周标题
+        renderWeekdays();
+        // 渲染当月
+        generateMonthlyCalendar();
+        // 绑定切换按钮
+        document.getElementById('prevMonthBtn').addEventListener('click', prevMonth);
+        document.getElementById('nextMonthBtn').addEventListener('click', nextMonth);
         // 保持原有的当前日期设置
         endDateInput.value = getCurrentTime().slice(0, 10);
     });
