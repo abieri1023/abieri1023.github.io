@@ -18,17 +18,18 @@
 
         .nav-bar { display: flex; justify-content: center; margin-top: 8px; }
         .nav-btn {
-            background: linear-gradient(135deg, #4e72df 0%, #849ced 100%);
-            color: white;
-            border: none;
+            background: linear-gradient(135deg, #f7f9ff 0%, #f0f4ff 100%);
+            color: #2f4fa7;
+            border: 1px solid #d9e3ff;
             padding: 8px 14px;
             border-radius: 8px;
             font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(78, 115, 223, 0.25);
+            box-shadow: 0 2px 6px rgba(47, 79, 167, 0.15);
             transition: all 0.2s ease;
         }
-        .nav-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(78, 115, 223, 0.35); }
+        .nav-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(47, 79, 167, 0.22); }
         .page-header { display:flex; align-items:center; justify-content:space-between; height:44px; padding:0 10px; }
         .nav-right { display:flex; align-items:center; gap:8px; }
         .page-title { font-size:20px; color:#0b5ea8; background-color:#b3d2ee; border-radius:8px; padding:4px 14px; border:1px solid #5ba46b; }
@@ -227,6 +228,12 @@
         render(info.dateStr);
         document.getElementById('clearToday').addEventListener('click', clearToday);
     });
+</script>
+<script>
+// 注册 Service Worker，屏蔽 miao.baidu.com 的网络请求
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').catch(function(){});
+}
 </script>
 </body>
 </html>
