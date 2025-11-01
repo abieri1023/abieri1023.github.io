@@ -190,8 +190,8 @@
         .page-title { font-size:20px; color:#0b5ea8; background-color:#b3d2ee; border-radius:8px; padding:4px 14px; border:1px solid #5ba46b; }
         .month-calendar { background:#f8fffe; border-radius:12px; padding:16px; box-shadow:0 4px 20px rgba(78,115,223,0.1); border:1px solid rgba(78,115,223,0.15); margin:10px 10px 20px; }
         .calendar-header { display:flex; justify-content:space-between; align-items:center; font-weight:600; color:#2c3e50; margin-bottom:10px; }
-        .month-btn { background:#ffffff; color:#2c3e50; border:1px solid #e0e9f3; padding:6px 10px; border-radius:6px; font-size:14px; cursor:pointer; }
-        .month-btn:hover { background:#f5f9ff; }
+        .month-btn { background:linear-gradient(135deg,#f3f6ff 0%,#eef3ff 100%); color:#2f4fa7; border:1px solid #d9e3ff; padding:8px 14px; border-radius:8px; font-size:16px; font-weight:600; cursor:pointer; box-shadow:0 2px 6px rgba(47,79,167,0.15); }
+.month-btn:hover { transform: translateY(-1px); box-shadow:0 4px 10px rgba(47,79,167,0.22); }
         .weekday-header { display:grid; grid-template-columns: repeat(7, 1fr); gap:6px; margin: 6px 0; font-size:12px; color:#6c757d; }
         .weekday-cell { text-align:center; font-weight:600; }
         .calendar-grid { display:grid; grid-template-columns: repeat(7, 1fr); gap:6px; }
@@ -269,9 +269,9 @@
 
             <div class="month-calendar">
                  <div class="calendar-header">
-                     <button class="month-btn" id="prevMonthBtn">上个月</button>
+                     <button class="month-btn" id="prevMonthBtn">← 上个月</button>
                      <div id="calendarHeader"></div>
-                     <button class="month-btn" id="nextMonthBtn">下个月</button>
+                     <button class="month-btn" id="nextMonthBtn">下个月 →</button>
                  </div>
                  <div class="weekday-header" id="weekdayHeader"></div>
                  <div class="calendar-grid" id="monthCalendarGrid"></div>
@@ -281,7 +281,7 @@
 
                 <div class="calculator-card">
                     <div class="input-group">
-                        <input type="date" class="date-input" id="endDate" onchange="cleanDate()">
+                        <input type="text" class="date-input" id="endDate" placeholder="点击选择日期" readonly onclick="openDatePicker()">
                     </div>
 
                     <button class="calculate-btn" onclick="calculateDateDifference()">
@@ -527,6 +527,14 @@
         renderWeekdays();
         // 渲染当月
         generateMonthlyCalendar();
+        // 页面结构：把“日历模块”放在“昨今明后模块”之前
+        (function reorderModules(){
+            const recent = document.getElementById('recentShifts');
+            const calendar = document.querySelector('.month-calendar');
+            if (recent && calendar && calendar.parentNode) {
+                calendar.parentNode.insertBefore(calendar, recent);
+            }
+        })();
         // 绑定切换按钮
         document.getElementById('prevMonthBtn').addEventListener('click', prevMonth);
         document.getElementById('nextMonthBtn').addEventListener('click', nextMonth);
@@ -545,6 +553,140 @@
         document.getElementById("result1").innerHTML = "";
         document.getElementById("result2").innerHTML = "";
     }
+
+    // 自定义日期选择器（弹窗）
+    let dpYear, dpMonth, dpInit = false;
+    function ensureDatePicker() {
+        if (dpInit) return;
+        // 注入样式
+        const style = document.createElement('style');
+        style.textContent = `
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.35); display: none; align-items: center; justify-content: center; z-index: 9999; }
+        .modal { width: 340px; background: #ffffff; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); padding: 12px; }
+        .date-picker-header { display:flex; justify-content:space-between; align-items:center; font-weight:600; color:#2c3e50; margin-bottom:8px; }
+        .dp-weekday { display:grid; grid-template-columns: repeat(7, 1fr); gap:6px; margin: 6px 0; font-size:12px; color:#6c757d; }
+        .dp-grid { display:grid; grid-template-columns: repeat(7, 1fr); gap:6px; }
+        .dp-cell { background:white; border-radius:8px; padding:8px; box-shadow:0 1px 3px rgba(0,0,0,0.08); text-align:center; cursor:pointer; }
+        .dp-cell:hover { background:#f0f7ff; }
+        .dp-day { font-weight:700; color:#2c3e50; }
+        .dp-actions { display:flex; justify-content:flex-end; margin-top:8px; }
+        .dp-today { border:1px solid #4ba2f9; background:linear-gradient(90deg,#e3f2fd,#f0f8ff); }
+        `;
+        document.head.appendChild(style);
+        // 注入弹窗结构
+        const overlay = document.createElement('div');
+        overlay.id = 'datePickerModal';
+        overlay.className = 'modal-overlay';
+        overlay.innerHTML = `
+          <div class="modal">
+            <div class="date-picker-header">
+              <button class="month-btn" onclick="dpPrev()">←</button>
+              <div id="dpHeader"></div>
+              <button class="month-btn" onclick="dpNext()">→</button>
+            </div>
+            <div class="dp-weekday" id="dpWeekHeader"></div>
+            <div class="dp-grid" id="dpGrid"></div>
+            <div class="dp-actions">
+              <button class="month-btn" onclick="closeDatePicker()">关闭</button>
+            </div>
+          </div>`;
+        document.body.appendChild(overlay);
+        dpInit = true;
+    }
+    function renderDpHeader() {
+        document.getElementById('dpHeader').textContent = `${dpYear}年${('0' + dpMonth).slice(-2)}月`;
+    }
+    function renderDpWeekdays() {
+        const names = ['日','一','二','三','四','五','六'];
+        const header = document.getElementById('dpWeekHeader');
+        header.innerHTML = '';
+        names.forEach(n => {
+            const span = document.createElement('div');
+            span.className = 'weekday-cell';
+            span.textContent = `周${n}`;
+            header.appendChild(span);
+        });
+    }
+    function renderDpGrid() {
+        const grid = document.getElementById('dpGrid');
+        grid.innerHTML = '';
+        const y = dpYear;
+        const m = dpMonth - 1;
+        const firstDay = new Date(y, m, 1);
+        const daysInMonth = new Date(y, m + 1, 0).getDate();
+        const offset = firstDay.getDay();
+        for (let i = 0; i < offset; i++) {
+            const empty = document.createElement('div');
+            empty.className = 'dp-cell';
+            empty.style.visibility = 'hidden';
+            grid.appendChild(empty);
+        }
+        const today = new Date();
+        const isSameMonth = (today.getFullYear() === y && (today.getMonth()+1) === dpMonth);
+        for (let day = 1; day <= daysInMonth; day++) {
+            const cell = document.createElement('div');
+            cell.className = 'dp-cell';
+            const dayEl = document.createElement('div');
+            dayEl.className = 'dp-day';
+            dayEl.textContent = day;
+            cell.appendChild(dayEl);
+            if (isSameMonth && today.getDate() === day) {
+                cell.classList.add('dp-today');
+            }
+            cell.addEventListener('click', function(){
+                const v = `${y}-${('0'+(m+1)).slice(-2)}-${('0'+day).slice(-2)}`;
+                const input = document.getElementById('endDate');
+                input.value = v;
+                cleanDate();
+                closeDatePicker();
+            });
+            grid.appendChild(cell);
+        }
+    }
+    function renderDatePicker() {
+        renderDpHeader();
+        renderDpWeekdays();
+        renderDpGrid();
+    }
+    function openDatePicker() {
+        ensureDatePicker();
+        const input = document.getElementById('endDate');
+        let base = new Date();
+        if (input.value) {
+            const parts = input.value.split('-');
+            if (parts.length === 3) base = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+        }
+        dpYear = base.getFullYear();
+        dpMonth = base.getMonth() + 1;
+        document.getElementById('datePickerModal').style.display = 'flex';
+        renderDatePicker();
+    }
+    function closeDatePicker() {
+        const overlay = document.getElementById('datePickerModal');
+        if (overlay) overlay.style.display = 'none';
+    }
+    function dpPrev() { if (dpMonth === 1) { dpMonth = 12; dpYear--; } else { dpMonth--; } renderDatePicker(); }
+    function dpNext() { if (dpMonth === 12) { dpMonth = 1; dpYear++; } else { dpMonth++; } renderDatePicker(); }
+
+    // index页：返回即关闭/退出（避免返回多次）
+    (function enableBackToClose(){
+        try {
+            if (window.__backToCloseEnabled) return;
+            window.__backToCloseEnabled = true;
+            history.pushState({backClose:true}, document.title, location.href);
+            window.addEventListener('popstate', function(){
+                let closed = false;
+                try {
+                    window.open('', '_self');
+                    window.close();
+                    closed = true;
+                } catch(e) {}
+                if (!closed) {
+                    location.replace('about:blank');
+                }
+            });
+        } catch(e) {}
+    })();
 
     function calculateDateDifference() {
         var startDate = new Date("2023-07-02");
