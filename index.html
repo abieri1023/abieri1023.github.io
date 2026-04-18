@@ -207,14 +207,15 @@
 </head>
 
 <body>
+    <div id="toast" class="toast"></div>
 
     <div class="div1">
         <div style="width: auto;border: 2px solid green;text-align:center;border-radius: 10px;">
             <div class="page-header">
                  <div class="page-title">排班小程序</div>
                  <div class="nav-right">
-                     <button class="nav-btn" onclick="location.href='address.html'">到此一游</button>
-                     <button class="nav-btn" onclick="location.href='balance.html'">余额记录</button>
+                    <button class="nav-btn" onclick="showToast('见高德地图')">到此一游</button>
+                    <button class="nav-btn" onclick="showToast('见腾讯文档')">余额记录</button>
                  </div>
              </div>
 
@@ -320,6 +321,17 @@
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./sw.js').catch(function(){});
 }
+
+// 显示自动消失的提示
+function showToast(message) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.classList.add('show');
+    
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, 2000);
+}
 </script>
 </body>
 <style>
@@ -360,6 +372,26 @@ if ('serviceWorker' in navigator) {
         border: 0;
         font-size: 16px;
         border-radius: 8px;
+    }
+
+    /* 提示框样式 */
+    .toast {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 16px 24px;
+        border-radius: 8px;
+        font-size: 16px;
+        z-index: 9999;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .toast.show {
+        opacity: 1;
     }
 
     button:hover {
